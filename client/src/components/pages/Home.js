@@ -3,6 +3,7 @@ import Jumbotron from '../layout/Jumbotron';
 import Main from '../layout/Main';
 import Sidebar from '../layout/Sidebar';
 import Info from '../layout/Info';
+import Footer from '../layout/Footer';
 
 const Home = () => {
 	return (
@@ -15,6 +16,7 @@ const Home = () => {
 				</div>
 				<hr />
 				<Info />
+				<Footer />
 			</div>
 		</Fragment>
 	);

@@ -23,7 +23,7 @@ const Navbar = () => {
 				<div class='collapse navbar-collapse' id='navbarSupportedContent'>
 					<ul className='navbar-nav ml-auto'>
 						<li className='nav-item'>
-							<Link className='nav-link' to='!#'>
+							<Link className='nav-link' to='/api/users'>
 								Run Sign-Up
 							</Link>
 						</li>
