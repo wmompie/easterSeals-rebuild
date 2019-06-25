@@ -10,7 +10,7 @@ const Navbar = () => {
 					<img id='logo' src={logo} alt='Easterseals Logo' />
 				</Link>
 				<button
-					class='navbar-toggler'
+					className='navbar-toggler'
 					type='button'
 					data-toggle='collapse'
 					data-target='#navbarSupportedContent'
@@ -18,12 +18,12 @@ const Navbar = () => {
 					aria-expanded='false'
 					aria-label='Toggle navigation'
 				>
-					<span class='navbar-toggler-icon' />
+					<span className='navbar-toggler-icon' />
 				</button>
-				<div class='collapse navbar-collapse' id='navbarSupportedContent'>
+				<div className='collapse navbar-collapse' id='navbarSupportedContent'>
 					<ul className='navbar-nav ml-auto'>
 						<li className='nav-item'>
-							<Link className='nav-link' to='/api/users'>
+							<Link className='nav-link' to='/register'>
 								Run Sign-Up
 							</Link>
 						</li>

@@ -1,9 +1,25 @@
-import React, { Fragment, useState, useContext } from 'react'
+import React, { Fragment, useState, useContext, useEffect } from 'react'
 import Footer from '../layout/Footer'
+import Alerts from '../layout/Alerts'
 import RunnerContext from '../../context/runner/runnerContext';
+import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
 const SignUp = () => {
   const runnerContext = useContext(RunnerContext);
+  const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
+
+  const { setAlert } = alertContext;
+
+  const { register, error, clearErrors } = authContext;
+
+  useEffect(() => {
+    if(error === 'A runner with that email has already registered') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+  }, [error])
 
   const [runner, setRunner] = useState({
     name: '',
@@ -24,6 +40,22 @@ const SignUp = () => {
   const onSubmit = e => {
     e.preventDefault();
     runnerContext.addRunner(runner);
+    if(name === '' || email === '' || address === '' || city === '' || postal === '' || phone === '' || error !== 'A runner with that email has already registered') {
+      setAlert('Please enter all fields', 'danger');
+    } else {
+      setAlert('Registration has been submitted successfully', 'success');
+      register({
+        name,
+        email,
+        address,
+        address2,
+        city,
+        state,
+        postal,
+        phone,
+        distance,
+      });
+    }
     setRunner({
       name: '',
       email: '',
@@ -39,10 +71,10 @@ const SignUp = () => {
 
   return (
     <Fragment>
-    <div className="signup-form">
+    <div className="container signup-form">
       <h1 className="mb-5 text-center">Easterseals Run | Sign-Up Form</h1>
-
-      <div className="container mb-5 border rounded border-orange pt-5 pb-2 px-4">
+      <Alerts />
+      <div className="mb-5 border rounded border-orange pt-5 pb-2 px-4">
         <form onSubmit={onSubmit}>
           <div className="form-row">
             <div className="form-group col-md-6">
@@ -54,6 +86,7 @@ const SignUp = () => {
                 className="form-control form-control-lg"
                 value={name}
                 onChange={onChange}
+                required
               />
             </div>
             <div className="form-group col-md-6">
@@ -65,6 +98,7 @@ const SignUp = () => {
               className="form-control form-control-lg"
               value={email}
               onChange={onChange}
+              required
               />
             </div>
           </div>
@@ -78,6 +112,7 @@ const SignUp = () => {
                 className="form-control form-control-lg"
                 value={address}
                 onChange={onChange}
+                required
               />
             </div>
             <div className="form-group col-md-6">
@@ -102,6 +137,7 @@ const SignUp = () => {
               className="form-control form-control-lg"
               value={city}
               onChange={onChange}
+              required
               />
             </div>
             <div className="form-group col-md-4">
@@ -120,7 +156,7 @@ const SignUp = () => {
                 <option selected={state === 'CT'} value="CT">CT</option>
                 <option selected={state === 'DC'} value="DC">DC</option>
                 <option selected={state === 'DE'} value="DE">DE</option>
-                <option selected={state === 'FL'} value='FL'>FL</option>
+                <option selected={state === 'FL'} defaultValue='FL'>FL</option>
                 <option selected={state === 'GA'} value="GA">GA</option>
                 <option selected={state === 'HI'} value="HI">HI</option>
                 <option selected={state === 'IA'} value="IA">IA</option>
@@ -172,6 +208,7 @@ const SignUp = () => {
               className="form-control form-control-lg"
               value={postal}
               onChange={onChange}
+              required
               />
             </div>
           </div>
@@ -185,6 +222,7 @@ const SignUp = () => {
               className="form-control form-control-lg"
               value={phone}
               onChange={onChange}
+              required
               />
             </div>
             <div className="form-group col-md-6">
@@ -215,11 +253,11 @@ const SignUp = () => {
 
     <hr />
 
-    <div class="mt-3">
-      <div class="text-center">
+    <div className="mt-3">
+      <div className="text-center">
         <h4>Easterseals</h4>
         <p>
-          16105 Schaefer Pike, Pompano Beach, Florida 33060 | <i class="fas fa-phone-volume"></i> <a href="tel:800-221-6827">800-221-6827</a> (toll-free) Easterseals and its affiliate
+          16105 Schaefer Pike, Pompano Beach, Florida 33060 | <i className="fas fa-phone-volume"></i> <a href="tel:800-221-6827">800-221-6827</a> (toll-free) Easterseals and its affiliate
           organizations are 501(c)(3) nonprofit organizations.
         </p>
         <p>
