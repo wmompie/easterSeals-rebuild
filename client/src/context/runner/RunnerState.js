@@ -46,11 +46,16 @@ const RunnerState = props => {
 	const [state, dispatch] = useReducer(runnerReducer, initialState);
 
 	// Add Runner
+	const addRunner = runner => {
+		runner.id = uuid.v4();
+		dispatch({ type: ADD_RUNNER, payload: runner });
+	};
 
 	return (
 		<RunnerContext.Provider
 			value={{
 				runners: state.runners,
+				addRunner,
 			}}
 		>
 			{props.children}

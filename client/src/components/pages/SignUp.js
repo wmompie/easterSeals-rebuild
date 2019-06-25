@@ -1,7 +1,10 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import Footer from '../layout/Footer'
+import RunnerContext from '../../context/runner/runnerContext';
 
 const SignUp = () => {
+  const runnerContext = useContext(RunnerContext);
+
   const [runner, setRunner] = useState({
     name: '',
     email: '',
@@ -18,13 +21,29 @@ const SignUp = () => {
 
   const onChange = e => setRunner({ ...runner, [e.target.name]: e.target.value });
 
+  const onSubmit = e => {
+    e.preventDefault();
+    runnerContext.addRunner(runner);
+    setRunner({
+      name: '',
+      email: '',
+      address: '',
+      address2: '',
+      city: 'Miami',
+      state: 'FL',
+      postal: '',
+      phone: '',
+      distance: '5K',
+    });
+  }
+
   return (
     <Fragment>
     <div className="signup-form">
       <h1 className="mb-5 text-center">Easterseals Run | Sign-Up Form</h1>
 
       <div className="container mb-5 border rounded border-orange pt-5 pb-2 px-4">
-        <form>
+        <form onSubmit={onSubmit}>
           <div className="form-row">
             <div className="form-group col-md-6">
               <label htmlFor="name" className="font-weight-bold">Name <span className="red-asterisk">&#42;</span></label>
@@ -90,6 +109,7 @@ const SignUp = () => {
               <select
               name="state"
               className="form-control form-control-lg"
+              onChange={onChange}
               >
                 <option selected={state === 'AL'} value="AL">AL</option>
                 <option selected={state === 'AK'} value="AK">AK</option>
@@ -172,6 +192,7 @@ const SignUp = () => {
               <select
               name="distance"
               className="form-control form-control-lg"
+              onChange={onChange}
               >
                 <option selected={distance === '1 Mile'} value="1 Mile">1 Mile</option>
                 <option selected={distance === '5K'} value="5K">5K</option>
