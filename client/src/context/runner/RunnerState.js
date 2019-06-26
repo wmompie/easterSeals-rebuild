@@ -1,66 +1,58 @@
 import React, { useReducer } from 'react';
-import uuid from 'uuid';
+import axios from 'axios';
 import RunnerContext from './runnerContext';
 import runnerReducer from './runnerReducer';
-import { ADD_RUNNER } from '../types';
+import { REGISTER_SUCCESS, REGISTER_FAIL, CLEAR_ERRORS } from '../types';
 
 const RunnerState = props => {
-	const initialState = {
-		runners: [
-			{
-				id: 1,
-				name: 'John Doe',
-				email: 'jdoe@gmail.com',
-				address: '1234 Main Street',
-				city: 'Miami',
-				state: 'FL',
-				postal: '31314',
-				phone: '222-222-2222',
-				distance: '5K',
-			},
-			{
-				id: 2,
-				name: 'Jill Johnson',
-				email: 'jill@gmail.com',
-				address: '1234 Main Corner',
-				city: 'Boston',
-				state: 'MA',
-				postal: '53523',
-				phone: '343-545-3434',
-				distance: '1 Mile',
-			},
-			{
-				id: 3,
-				name: 'Sara Watson',
-				email: 'sara@gmail.com',
-				address: '1 Main Way',
-				city: 'New York',
-				state: 'NY',
-				postal: '12001',
-				phone: '212-212-3322',
-				distance: '10K',
-			},
-		],
-	};
+  const initialState = {
+    token: localStorage.getItem('token'),
+    loading: true,
+    runner: null,
+    error: null,
+  };
 
-	const [state, dispatch] = useReducer(runnerReducer, initialState);
+  const [state, dispatch] = useReducer(runnerReducer, initialState);
 
-	// Add Runner
-	const addRunner = runner => {
-		runner.id = uuid.v4();
-		dispatch({ type: ADD_RUNNER, payload: runner });
-	};
+  // Register Runner
+  const register = async formData => {
+    const config = {
+      header: {
+        'Content-Type': 'application/json',
+      },
+    };
 
-	return (
-		<RunnerContext.Provider
-			value={{
-				runners: state.runners,
-				addRunner,
-			}}
-		>
-			{props.children}
-		</RunnerContext.Provider>
-	);
+    try {
+      const res = await axios.post('/api/runners', formData, config);
+
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: REGISTER_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
+
+  // Clear Errors
+  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+
+  return (
+    <RunnerContext.Provider
+      value={{
+        token: state.token,
+        loading: state.loadng,
+        runner: state.runner,
+        error: state.error,
+        register,
+        clearErrors,
+      }}>
+      {props.children}
+    </RunnerContext.Provider>
+  );
 };
 
 export default RunnerState;
