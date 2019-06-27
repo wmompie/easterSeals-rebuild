@@ -19,12 +19,12 @@ Website clone created to implement basic concepts of PHP, MySQL, cookies, sessio
 - [React.js](https://reactjs.org/) - A JavaScript library for building user interfaces
 - [Axios](https://www.npmjs.com/package/axios) - a Promise-based HTTP client for JavaScript
 - [React Router](https://www.npmjs.com/package/react-router-dom) - Collection of navigational components that compose declaratively with the application
+- [Bootstrap](https://getbootstrap.com/) - The most popular HTML, CSS, and JS library in the world
 - [Fontawesome](https://fontawesome.com/) - Vector icons, social logos and the web's most popular icon set and toolkit
 
 ### Backend
 
 - [Express.js](https://expressjs.com/) - a web application framework for Node.js
-- [BCryptjs](https://www.npmjs.com/package/bcryptjs) - A library to help with hash passwords
 - [JWT](https://jwt.io/) - a compact and self-contained way for securely transmitting information between parties as a JSON object
 - [Config](https://www.npmjs.com/package/config) - to handle global variables
 - [Express Validator](https://www.npmjs.com/package/express-validator) - a set of express.js middlewares that wraps validator.js validator and sanitizer functions
